@@ -1,6 +1,7 @@
 package mx.uv;
 
 import static spark.Spark.*;
+import com.google.gson.*;
 
 /**
  * Hello world!
@@ -47,5 +48,42 @@ public class App {
         get("/Ariana", (rq, rs) -> "Ariana");
 
         post("/hola", (rq, rs) -> "Hola post");
+
+        post("/hola", (rq, rs) -> {
+            System.out.println("Request: " + rq.queryParams("nombre") + " " + rq.queryParams("pass"));
+            String msj;
+            if (rq.queryParams("nombre").equals("root"))
+                msj = "Bienvenido!";
+            else
+                msj = "Usuario equivocado";
+            return "Hola post " + msj + " " + "<a href='//127.0.0.1:5500/formulario.html'>regresar</a>";
+        });
+
+        post("/holaJson", (rq, rs) -> {
+            // System.out.println("Request: " + rq.queryParams("nombre") + " " +
+            // rq.queryParams("pass"));
+            String request = rq.body();
+            System.out.println("Request: " + request );
+            String msj = null;
+            JsonParser parser = new JsonParser();
+            JsonElement arbol = parser.parse( request );
+            JsonObject peticion = arbol.getAsJsonObject();
+
+            Object nombre =  peticion.get("nombre") ;
+            // if (rq.queryParams("nombre").equals("root"))
+            // msj = "Bienvenido!";
+            // else
+            // msj = "Usuario equivocado";
+            return "Hola post " + nombre + " " + "<a href='//127.0.0.1:5500/formulario.html'>regresar</a>";
+        });
+
+        get("/holaJson", (rq,rs)->{
+            JsonObject respuesta = new JsonObject();
+            respuesta.addProperty("user", rq.queryParams("nombre"));
+            respuesta.addProperty("access", "granted");
+            respuesta.addProperty("time", 31312321);
+            return respuesta;
+        });
+
     }
 }
