@@ -52,8 +52,8 @@ public class App {
         });
 
         post("/holaJson", (rq, rs) -> {
-            System.out.println("Request: " + rq.queryParams("nombre") + " " +
-            rq.queryParams("pass"));
+            //System.out.println("Request: " + rq.queryParams("nombre") + " " +
+            //rq.queryParams("pass"));
             String request = rq.body();
             System.out.println("Request: " + request );
             String msj = null;
