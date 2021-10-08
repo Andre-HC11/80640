@@ -52,8 +52,8 @@ public class App {
         });
 
         post("/holaJson", (rq, rs) -> {
-            //System.out.println("Request: " + rq.queryParams("nombre") + " " +
-            //rq.queryParams("pass"));
+            System.out.println("Request: " + rq.queryParams("nombre") + " " +
+            rq.queryParams("pass"));
             String request = rq.body();
             System.out.println("Request: " + request );
             String msj = null;
@@ -74,7 +74,7 @@ public class App {
             JsonObject respuesta = new JsonObject();
             respuesta.addProperty("user", req.queryParams("nombre"));
             respuesta.addProperty("access", "granted");
-            respuesta.addProperty("time", 31312321);
+            respuesta.addProperty("time", "Bienvenido");
             return respuesta;
         });   
     }
